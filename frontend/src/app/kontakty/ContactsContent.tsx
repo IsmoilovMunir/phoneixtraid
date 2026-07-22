@@ -36,9 +36,19 @@ export function ContactsContent() {
               <address className="not-italic space-y-6">
                 <div>
                   <p className="text-xs text-gold tracking-wide uppercase mb-1">
-                    {page.address}
+                    {dict.config.officeMoscow}
                   </p>
-                  <p className="text-green-dark">{dict.config.addressFull}</p>
+                  <p className="text-green-dark leading-relaxed">
+                    {dict.config.addressMoscow}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-xs text-gold tracking-wide uppercase mb-1">
+                    {dict.config.officeTehran}
+                  </p>
+                  <p className="text-green-dark leading-relaxed">
+                    {dict.config.addressTehran}
+                  </p>
                 </div>
                 <div>
                   <p className="text-xs text-gold tracking-wide uppercase mb-1">
@@ -73,7 +83,7 @@ export function ContactsContent() {
               <div className="mt-8 aspect-[16/10] rounded-2xl border border-gold/20 overflow-hidden bg-green-dark/5">
                 <iframe
                   title={page.mapTitle}
-                  src="https://yandex.ru/map-widget/v1/?um=constructor%3Aplaceholder&source=constructor"
+                  src="https://yandex.ru/map-widget/v1/?ll=37.474846%2C55.599990&z=16&l=map&pt=37.474846,55.599990,pm2rdm"
                   width="100%"
                   height="100%"
                   style={{ border: 0, minHeight: 300 }}

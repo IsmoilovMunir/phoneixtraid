@@ -46,8 +46,19 @@ export function Footer() {
             <h3 className="font-serif text-sm tracking-[0.2em] uppercase text-gold mb-4">
               {dict.footer.contacts}
             </h3>
-            <address className="not-italic space-y-2 text-sm text-cream/70">
-              <p>{dict.config.addressFull}</p>
+            <address className="not-italic space-y-3 text-sm text-cream/70">
+              <div>
+                <p className="text-gold text-xs tracking-wide uppercase mb-1">
+                  {dict.config.officeMoscow}
+                </p>
+                <p className="leading-relaxed">{dict.config.addressMoscow}</p>
+              </div>
+              <div>
+                <p className="text-gold text-xs tracking-wide uppercase mb-1">
+                  {dict.config.officeTehran}
+                </p>
+                <p className="leading-relaxed">{dict.config.addressTehran}</p>
+              </div>
               <p>
                 <a
                   href={`tel:${siteConfig.phoneHref}`}

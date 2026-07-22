@@ -70,6 +70,29 @@ export function organizationJsonLd() {
       postalCode: siteConfig.address.postalCode,
       addressCountry: "RU",
     },
+    location: [
+      {
+        "@type": "Place",
+        name: `${siteConfig.name} — Москва`,
+        address: {
+          "@type": "PostalAddress",
+          streetAddress: siteConfig.address.street,
+          addressLocality: siteConfig.address.city,
+          postalCode: siteConfig.address.postalCode,
+          addressCountry: "RU",
+        },
+      },
+      {
+        "@type": "Place",
+        name: `${siteConfig.name} — Тегеран`,
+        address: {
+          "@type": "PostalAddress",
+          streetAddress: siteConfig.addressTehran.street,
+          addressLocality: siteConfig.addressTehran.city,
+          addressCountry: "IR",
+        },
+      },
+    ],
     openingHours: "Mo-Fr 09:00-18:00",
     sameAs: [siteConfig.social.telegram],
   };

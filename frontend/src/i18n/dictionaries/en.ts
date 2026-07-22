@@ -39,7 +39,14 @@ export const enDictionary: Dictionary = {
     legalName: "Phoenix Trading LLC",
     description:
       "BRICS+ International Trade Center. Wholesale supplies of food products, spices, and beverages from Russia, China, India, and other countries.",
-    addressFull: "105005, Moscow, Tovarishchesky Lane, 8 bldg. 1",
+    addressFull:
+      "108802, Moscow, Kaluzhskoye Highway, 22nd km, 10, Kommunarka settlement, Novomoskovsky Administrative Okrug, pavilion OST24-028",
+    addressMoscow:
+      "108802, Moscow, Kaluzhskoye Highway, 22nd km, 10, Kommunarka settlement, Novomoskovsky Administrative Okrug, pavilion OST24-028",
+    addressTehran:
+      "Tehran, Saadat Abad district, Shahnameh Blvd, start of Parand cul-de-sac, building No. 3, office No. 3",
+    officeMoscow: "Moscow Office",
+    officeTehran: "Tehran Office",
     workingHours: "Mon–Fri: 9:00–18:00",
     cityPrefix: "",
   },
@@ -264,7 +271,7 @@ export const enDictionary: Dictionary = {
     workingHours: "Working Hours",
     writeUs: "Write to Us",
     mapTitle:
-      "Map — Phoenix Trading office, Moscow, Tovarishchesky Lane, 8",
+      "Map — Phoenix Trading office, Moscow, Kaluzhskoye Highway, Kommunarka",
   },
   forms: {
     contact: {
