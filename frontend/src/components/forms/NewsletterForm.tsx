@@ -3,10 +3,13 @@
 import { useActionState } from "react";
 import { submitNewsletter } from "@/lib/actions";
 import type { FormState } from "@/lib/validations";
+import { useDictionary } from "@/components/i18n/LocaleProvider";
 
 const initialState: FormState = { success: false, message: "" };
 
 export function NewsletterForm() {
+  const dict = useDictionary();
+  const t = dict.forms.newsletter;
   const [state, action, pending] = useActionState(
     submitNewsletter,
     initialState
@@ -18,7 +21,7 @@ export function NewsletterForm() {
         <input
           name="email"
           type="email"
-          placeholder="your@email.com"
+          placeholder={t.emailPlaceholder}
           required
           className="flex-1 rounded-lg border border-gold/30 bg-green-dark/50 px-4 py-2.5 text-sm text-cream placeholder:text-cream/40 focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold"
         />
@@ -27,7 +30,7 @@ export function NewsletterForm() {
           disabled={pending}
           className="rounded-lg bg-gold px-4 py-2.5 text-sm font-semibold text-green-dark hover:bg-gold-light transition-colors disabled:opacity-50 shrink-0"
         >
-          {pending ? "..." : "OK"}
+          {pending ? t.submitting : t.submit}
         </button>
       </form>
       {state.message && (

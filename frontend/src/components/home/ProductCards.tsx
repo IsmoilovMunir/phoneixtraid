@@ -4,48 +4,22 @@ import Image, { type StaticImageData } from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
+import { useDictionary } from "@/components/i18n/LocaleProvider";
+import type { Dictionary } from "@/i18n/dictionaries/types";
 import orehiImg from "@/assets/orehi.png";
 import sukhofruktyImg from "@/assets/sukhofrukty.png";
-import spetsiiImg from "@/assets/spetsii.png";
+import bakaleyaImg from "@/assets/bakaleya.png";
 import napitkiImg from "@/assets/napitki.png";
 import sladostiImg from "@/assets/sladosti.png";
 
-const categories: {
-  slug: string;
-  title: string;
-  description: string;
-  image: StaticImageData;
-}[] = [
-  {
-    slug: "orehi",
-    title: "Орехи",
-    description: "Фисташки, миндаль, грецкий орех и др.",
-    image: orehiImg,
-  },
-  {
-    slug: "sukhofrukty",
-    title: "Сухофрукты",
-    description: "Финики, изюм, курага и др.",
-    image: sukhofruktyImg,
-  },
-  {
-    slug: "spetsii",
-    title: "Специи",
-    description: "Шафран, куркума, кардамон и др.",
-    image: spetsiiImg,
-  },
-  {
-    slug: "napitki",
-    title: "Напитки",
-    description: "Безалкогольные напитки, соки, вода и др.",
-    image: napitkiImg,
-  },
-  {
-    slug: "sladosti",
-    title: "Сладости",
-    description: "Восточные сладости, шоколад, халва и др.",
-    image: sladostiImg,
-  },
+type CategorySlug = keyof Dictionary["productCategories"];
+
+const categoryImages: { slug: CategorySlug; image: StaticImageData }[] = [
+  { slug: "orehi", image: orehiImg },
+  { slug: "sukhofrukty", image: sukhofruktyImg },
+  { slug: "bakaleya", image: bakaleyaImg },
+  { slug: "napitki", image: napitkiImg },
+  { slug: "sladosti", image: sladostiImg },
 ];
 
 function getCardStyle(index: number, active: number | null) {
@@ -77,14 +51,21 @@ function getCardStyle(index: number, active: number | null) {
 }
 
 export function ProductCards() {
+  const dict = useDictionary();
   const [active, setActive] = useState<number | null>(null);
+
+  const categories = categoryImages.map((cat) => ({
+    slug: cat.slug,
+    image: cat.image,
+    title: dict.productCategories[cat.slug].title,
+    description: dict.productCategories[cat.slug].short,
+  }));
 
   return (
     <div
       className="relative mt-2 overflow-visible px-0.5 py-2"
       onMouseLeave={() => setActive(null)}
     >
-      {/* Mobile: 2-col grid */}
       <div className="grid grid-cols-2 gap-3 sm:hidden">
         {categories.map((cat) => (
           <Link
@@ -114,7 +95,6 @@ export function ProductCards() {
         ))}
       </div>
 
-      {/* Tablet+: hover row */}
       <div className="relative hidden sm:flex items-stretch gap-2 md:gap-3 min-h-[200px] md:min-h-[240px]">
         {categories.map((cat, index) => {
           const style = getCardStyle(index, active);

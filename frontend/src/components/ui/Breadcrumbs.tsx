@@ -1,5 +1,8 @@
+"use client";
+
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import { useDictionary } from "@/components/i18n/LocaleProvider";
 
 interface BreadcrumbItem {
   label: string;
@@ -12,8 +15,10 @@ interface BreadcrumbsProps {
 }
 
 export function Breadcrumbs({ items, className }: BreadcrumbsProps) {
+  const dict = useDictionary();
+
   return (
-    <nav aria-label="Хлебные крошки" className={cn("py-4", className)}>
+    <nav aria-label={dict.common.breadcrumbs} className={cn("py-4", className)}>
       <ol className="flex flex-wrap items-center gap-2 text-sm text-cream/70">
         {items.map((item, index) => (
           <li key={item.label} className="flex items-center gap-2">

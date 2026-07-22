@@ -13,7 +13,7 @@ export interface Product {
 export type ProductCategory =
   | "orehi"
   | "sukhofrukty"
-  | "spetsii"
+  | "bakaleya"
   | "napitki"
   | "sladosti";
 

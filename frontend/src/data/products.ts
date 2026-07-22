@@ -14,10 +14,11 @@ export const productCategories: ProductCategoryInfo[] = [
     image: "/images/products/sukhofrukty.png",
   },
   {
-    slug: "spetsii",
-    title: "Специи",
-    description: "Шафран, куркума, кардамон и другие специи из стран БРИКС+",
-    image: "/images/products/spetsii.png",
+    slug: "bakaleya",
+    title: "Бакалея",
+    description:
+      "Рис, крупы, мука, специи и другие бакалейные товары из стран БРИКС+",
+    image: "/images/products/bakaleya.png",
   },
   {
     slug: "napitki",
@@ -97,7 +98,7 @@ export const products: Product[] = [
   {
     slug: "kurkuma",
     title: "Куркума",
-    category: "spetsii",
+    category: "bakaleya",
     shortDescription: "Куркума молотая высшего качества",
     description:
       "Куркума из Индии с высоким содержанием куркумина. Для пищевой промышленности и HoReCa.",
@@ -109,7 +110,7 @@ export const products: Product[] = [
   {
     slug: "chernyy-perets",
     title: "Чёрный перец",
-    category: "spetsii",
+    category: "bakaleya",
     shortDescription: "Чёрный перец горошком и молотый",
     description:
       "Чёрный перец из Индии и Вьетнама. Различные сорта для оптовых закупок.",

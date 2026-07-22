@@ -4,18 +4,21 @@ import { useActionState } from "react";
 import { submitPartnerForm } from "@/lib/actions";
 import type { FormState } from "@/lib/validations";
 import { cn } from "@/lib/utils";
+import { useDictionary } from "@/components/i18n/LocaleProvider";
 
 const initialState: FormState = { success: false, message: "" };
 
-const directions = [
-  "Импорт продукции",
-  "Экспорт продукции",
-  "Логистика и таможня",
-  "Дистрибуция",
-  "Другое",
-];
+const directionKeys = [
+  "import",
+  "export",
+  "logistics",
+  "distribution",
+  "other",
+] as const;
 
 export function PartnerForm() {
+  const dict = useDictionary();
+  const t = dict.forms.partner;
   const [state, action, pending] = useActionState(
     submitPartnerForm,
     initialState
@@ -24,7 +27,7 @@ export function PartnerForm() {
   if (state.success) {
     return (
       <div className="rounded-lg border border-gold/30 bg-gold/10 p-6 text-center">
-        <p className="text-gold text-lg">{state.message}</p>
+        <p className="text-gold text-lg">{state.message || t.success}</p>
       </div>
     );
   }
@@ -36,7 +39,7 @@ export function PartnerForm() {
     <form action={action} className="space-y-4">
       <div>
         <label htmlFor="company" className="block text-sm text-cream/80 mb-1.5">
-          Компания <span className="text-gold">*</span>
+          {t.company} <span className="text-gold">*</span>
         </label>
         <input id="company" name="company" required className={inputClass} />
         {state.errors?.company && (
@@ -47,7 +50,7 @@ export function PartnerForm() {
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
           <label htmlFor="name" className="block text-sm text-cream/80 mb-1.5">
-            Контактное лицо <span className="text-gold">*</span>
+            {t.contactPerson} <span className="text-gold">*</span>
           </label>
           <input id="name" name="name" required className={inputClass} />
           {state.errors?.name && (
@@ -56,7 +59,7 @@ export function PartnerForm() {
         </div>
         <div>
           <label htmlFor="phone" className="block text-sm text-cream/80 mb-1.5">
-            Телефон <span className="text-gold">*</span>
+            {t.phone} <span className="text-gold">*</span>
           </label>
           <input id="phone" name="phone" type="tel" required className={inputClass} />
           {state.errors?.phone && (
@@ -67,7 +70,7 @@ export function PartnerForm() {
 
       <div>
         <label htmlFor="email" className="block text-sm text-cream/80 mb-1.5">
-          Email <span className="text-gold">*</span>
+          {t.email} <span className="text-gold">*</span>
         </label>
         <input id="email" name="email" type="email" required className={inputClass} />
         {state.errors?.email && (
@@ -77,13 +80,13 @@ export function PartnerForm() {
 
       <div>
         <label htmlFor="direction" className="block text-sm text-cream/80 mb-1.5">
-          Направление сотрудничества <span className="text-gold">*</span>
+          {t.direction} <span className="text-gold">*</span>
         </label>
         <select id="direction" name="direction" required className={cn(inputClass, "cursor-pointer")}>
-          <option value="">Выберите направление</option>
-          {directions.map((d) => (
-            <option key={d} value={d}>
-              {d}
+          <option value="">{t.directionPlaceholder}</option>
+          {directionKeys.map((key) => (
+            <option key={key} value={t.directions[key]}>
+              {t.directions[key]}
             </option>
           ))}
         </select>
@@ -94,7 +97,7 @@ export function PartnerForm() {
 
       <div>
         <label htmlFor="message" className="block text-sm text-cream/80 mb-1.5">
-          Дополнительная информация
+          {t.additionalInfo}
         </label>
         <textarea
           id="message"
@@ -113,7 +116,7 @@ export function PartnerForm() {
         disabled={pending}
         className="w-full rounded-lg bg-gold px-6 py-3 text-sm font-semibold uppercase tracking-wide text-green-dark transition-colors hover:bg-gold-light disabled:opacity-50"
       >
-        {pending ? "Отправка..." : "Отправить заявку"}
+        {pending ? t.submitting : t.submit}
       </button>
     </form>
   );

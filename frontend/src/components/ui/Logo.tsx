@@ -36,9 +36,9 @@ export function Logo({
         priority={priority}
         sizes="(max-width: 640px) 260px, (max-width: 1024px) 280px, 332px"
         className={cn(
-          "object-contain object-left w-auto max-w-full",
+          "object-contain object-start w-auto max-w-full",
           responsive
-            ? "h-20 sm:h-[88px] md:h-[100px] lg:h-[144px]"
+            ? "h-16 sm:h-[72px] md:h-[88px] lg:h-[112px]"
             : undefined
         )}
         style={responsive ? undefined : { height: `${height}px`, width: "auto" }}

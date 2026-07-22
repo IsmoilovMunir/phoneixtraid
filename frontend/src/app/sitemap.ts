@@ -1,7 +1,6 @@
 import type { MetadataRoute } from "next";
 import { siteConfig } from "@/lib/config";
 import { products, productCategories } from "@/data/products";
-import { newsArticles } from "@/data/news";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = siteConfig.url;
@@ -36,12 +35,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.75,
   }));
 
-  const newsPages: MetadataRoute.Sitemap = newsArticles.map((article) => ({
-    url: `${baseUrl}/novosti/${article.slug}`,
-    lastModified: new Date(article.publishedAt),
-    changeFrequency: "monthly",
-    priority: 0.6,
-  }));
-
-  return [...staticPages, ...categoryPages, ...productPages, ...newsPages];
+  return [...staticPages, ...categoryPages, ...productPages];
 }

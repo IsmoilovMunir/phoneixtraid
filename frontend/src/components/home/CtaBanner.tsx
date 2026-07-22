@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { Container } from "@/components/layout/Container";
 import { Button } from "@/components/ui/Button";
+import { useDictionary } from "@/components/i18n/LocaleProvider";
 import ctaBanner from "@/assets/cta-banner.png";
 
 const routes = [
@@ -25,13 +26,15 @@ const hubs = [
 ];
 
 export function CtaBanner() {
+  const dict = useDictionary();
+
   return (
     <section className="relative bg-green-darker py-8 sm:py-10 md:py-14 overflow-hidden">
       <Container>
         <div className="relative w-full max-w-[1800px] mx-auto min-h-[280px] sm:min-h-[220px] md:min-h-[240px] lg:min-h-[300px] md:aspect-[1800/300] overflow-hidden rounded-2xl border border-gold/30">
           <Image
             src={ctaBanner}
-            alt="Феникс Трейдинг — международные торговые маршруты и логистика"
+            alt={dict.home.ctaAlt}
             fill
             sizes="(max-width: 1800px) 100vw, 1800px"
             className="object-cover object-[70%_center] md:object-center"
@@ -46,7 +49,7 @@ export function CtaBanner() {
             }}
           />
           <div
-            className="absolute inset-0 z-[1] pointer-events-none hidden md:block"
+            className="absolute inset-0 z-[1] pointer-events-none hidden md:block rtl:-scale-x-100"
             style={{
               background:
                 "linear-gradient(90deg, rgba(6,38,27,0.95) 0%, rgba(6,38,27,0.85) 30%, rgba(6,38,27,0.45) 50%, rgba(6,38,27,0.12) 65%, transparent 80%)",
@@ -115,19 +118,19 @@ export function CtaBanner() {
             </g>
           </svg>
 
-          <div className="absolute inset-0 z-[3] flex items-end md:items-center">
-            <div className="w-full px-5 py-6 sm:px-6 md:px-10 lg:px-14 max-w-lg">
+          <div className="absolute inset-0 z-[3] flex items-end md:items-center justify-start">
+            <div className="w-full px-5 py-6 sm:px-6 md:px-10 lg:px-14 max-w-lg text-start">
               <h2 className="font-serif font-semibold text-xl sm:text-2xl md:text-3xl tracking-[0.08em] sm:tracking-[0.1em] uppercase text-gold mb-2 md:mb-3">
-                Станьте нашим партнёром
+                {dict.home.ctaTitle}
               </h2>
               <p className="text-cream/85 text-sm md:text-base leading-relaxed mb-1.5">
-                Феникс Трейдинг — ваш надёжный партнёр в международной торговле.
+                {dict.home.ctaLine1}
               </p>
               <p className="text-cream/85 text-sm md:text-base leading-relaxed mb-5">
-                Вместе мы достигнем большего!
+                {dict.home.ctaLine2}
               </p>
               <Button href="/kontakty" size="md" className="w-full sm:w-auto min-h-12">
-                Связаться с нами
+                {dict.home.ctaButton}
               </Button>
             </div>
           </div>

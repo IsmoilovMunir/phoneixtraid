@@ -39,6 +39,63 @@ body {
   overflow-x: hidden;
 }
 
+/* فارسی — RTL و فونت وزیرمتن */
+html[dir="rtl"] {
+  letter-spacing: 0;
+}
+
+html[dir="rtl"] body {
+  font-family: var(--font-vazirmatn), "Tahoma", "Segoe UI", sans-serif;
+  letter-spacing: 0;
+  line-height: 1.8;
+  word-spacing: 0.02em;
+}
+
+html[dir="rtl"] h1,
+html[dir="rtl"] h2,
+html[dir="rtl"] h3,
+html[dir="rtl"] h4,
+html[dir="rtl"] .font-serif,
+html[dir="rtl"] nav a,
+html[dir="rtl"] button,
+html[dir="rtl"] .btn {
+  font-family: var(--font-vazirmatn), "Tahoma", sans-serif;
+  letter-spacing: 0;
+}
+
+html[dir="rtl"] .tracking-\[0\.05em\],
+html[dir="rtl"] .tracking-\[0\.06em\],
+html[dir="rtl"] .tracking-\[0\.08em\],
+html[dir="rtl"] .tracking-\[0\.1em\],
+html[dir="rtl"] .tracking-\[0\.14em\],
+html[dir="rtl"] .tracking-\[0\.15em\],
+html[dir="rtl"] .tracking-\[0\.2em\],
+html[dir="rtl"] .tracking-wide,
+html[dir="rtl"] .tracking-\[0\.04em\] {
+  letter-spacing: 0 !important;
+}
+
+html[dir="rtl"] .uppercase {
+  text-transform: none;
+}
+
+/* گرادیان‌های چپ‌به‌راست در حالت RTL برعکس شوند */
+html[dir="rtl"] .rtl-flip-x {
+  transform: scaleX(-1);
+}
+
+/* آینه‌سازی منطقی برای عناصر جهت‌دار */
+html[dir="rtl"] .object-left {
+  object-position: right;
+}
+
+html[dir="rtl"] input,
+html[dir="rtl"] textarea,
+html[dir="rtl"] select {
+  text-align: right;
+  direction: rtl;
+}
+
 img,
 video {
   max-width: 100%;

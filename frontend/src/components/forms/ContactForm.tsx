@@ -4,6 +4,7 @@ import { useActionState } from "react";
 import { submitContactForm } from "@/lib/actions";
 import type { FormState } from "@/lib/validations";
 import { cn } from "@/lib/utils";
+import { useDictionary } from "@/components/i18n/LocaleProvider";
 
 const initialState: FormState = { success: false, message: "" };
 
@@ -30,7 +31,7 @@ function FormField({
     <div>
       <label htmlFor={id} className="block text-sm text-cream/80 mb-1.5">
         {label}
-        {required && <span className="text-gold ml-1">*</span>}
+        {required && <span className="text-gold ms-1">*</span>}
       </label>
       {rows ? (
         <textarea
@@ -65,6 +66,8 @@ function FormField({
 }
 
 export function ContactForm() {
+  const dict = useDictionary();
+  const t = dict.forms.contact;
   const [state, action, pending] = useActionState(
     submitContactForm,
     initialState
@@ -73,7 +76,7 @@ export function ContactForm() {
   if (state.success) {
     return (
       <div className="rounded-lg border border-gold/30 bg-gold/10 p-6 text-center">
-        <p className="text-gold text-lg">{state.message}</p>
+        <p className="text-gold text-lg">{state.message || t.success}</p>
       </div>
     );
   }
@@ -81,26 +84,26 @@ export function ContactForm() {
   return (
     <form action={action} className="space-y-4">
       <FormField
-        label="Ваше имя"
+        label={t.name}
         name="name"
         required
         errors={state.errors?.name}
       />
       <FormField
-        label="Email"
+        label={t.email}
         name="email"
         type="email"
         required
         errors={state.errors?.email}
       />
       <FormField
-        label="Телефон"
+        label={t.phone}
         name="phone"
         type="tel"
         errors={state.errors?.phone}
       />
       <FormField
-        label="Сообщение"
+        label={t.message}
         name="message"
         required
         rows={5}
@@ -116,7 +119,7 @@ export function ContactForm() {
         disabled={pending}
         className="w-full rounded-lg bg-gold px-6 py-3 text-sm font-semibold uppercase tracking-wide text-green-dark transition-colors hover:bg-gold-light disabled:opacity-50"
       >
-        {pending ? "Отправка..." : "Отправить сообщение"}
+        {pending ? t.submitting : t.submit}
       </button>
     </form>
   );

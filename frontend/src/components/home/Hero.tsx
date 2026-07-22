@@ -1,62 +1,50 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { Container } from "@/components/layout/Container";
 import { Button } from "@/components/ui/Button";
 import { DrivingKamaz } from "@/components/home/DrivingKamaz";
 import { RouteMotion } from "@/components/home/RouteMotion";
+import { useDictionary } from "@/components/i18n/LocaleProvider";
 import { benefits } from "@/data/benefits";
 import { useIsDesktop } from "@/hooks/useMediaQuery";
 import heroBanner from "@/assets/hero-banner.png";
 import worldMap from "@/assets/world-map.png";
 
-const stats = [
-  {
-    value: "20+",
-    label: "Стран-партнёров",
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="h-5 w-5">
-        <circle cx="12" cy="12" r="9" />
-        <path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18" />
-      </svg>
-    ),
-  },
-  {
-    value: "1000+",
-    label: "Поставщиков",
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="h-5 w-5">
-        <path d="M16 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2" />
-        <circle cx="9.5" cy="7" r="3.5" />
-        <path d="M22 21v-2a3.5 3.5 0 0 0-2.5-3.3M16.5 3.7a3.5 3.5 0 0 1 0 6.6" />
-      </svg>
-    ),
-  },
-  {
-    value: "5000+",
-    label: "Тонн товаров ежемесячно",
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="h-5 w-5">
-        <path d="M3 7h13v10H3z" />
-        <path d="M16 10h3l2 3v4h-5V10z" />
-        <circle cx="7" cy="19" r="1.5" />
-        <circle cx="18" cy="19" r="1.5" />
-      </svg>
-    ),
-  },
-  {
-    value: "10+",
-    label: "Лет успешной работы",
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="h-5 w-5">
-        <circle cx="12" cy="12" r="9" />
-        <path d="M12 7v5l3 2" />
-      </svg>
-    ),
-  },
+const statIcons: ReactNode[] = [
+  (
+    <svg key="countries" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="h-5 w-5">
+      <circle cx="12" cy="12" r="9" />
+      <path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18" />
+    </svg>
+  ),
+  (
+    <svg key="suppliers" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="h-5 w-5">
+      <path d="M16 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2" />
+      <circle cx="9.5" cy="7" r="3.5" />
+      <path d="M22 21v-2a3.5 3.5 0 0 0-2.5-3.3M16.5 3.7a3.5 3.5 0 0 1 0 6.6" />
+    </svg>
+  ),
+  (
+    <svg key="tons" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="h-5 w-5">
+      <path d="M3 7h13v10H3z" />
+      <path d="M16 10h3l2 3v4h-5V10z" />
+      <circle cx="7" cy="19" r="1.5" />
+      <circle cx="18" cy="19" r="1.5" />
+    </svg>
+  ),
+  (
+    <svg key="offices" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="h-5 w-5">
+      <path d="M3 21h18" />
+      <path d="M5 21V8l7-4 7 4v13" />
+      <path d="M9 21v-6h6v6" />
+    </svg>
+  ),
 ];
 
+const statValues = ["20+", "80+", "300+", "2"] as const;
+const statLabelKeys = ["countries", "suppliers", "tons", "offices"] as const;
 function clamp01(n: number) {
   return Math.min(1, Math.max(0, n));
 }
@@ -75,6 +63,13 @@ function benefitOpacity(progress: number, index: number): number {
 }
 
 function HeroIntro({ compact }: { compact?: boolean }) {
+  const dict = useDictionary();
+  const stats = statLabelKeys.map((key, i) => ({
+    value: statValues[i],
+    label: dict.home.stats[key],
+    icon: statIcons[i],
+  }));
+
   return (
     <>
       <div className={compact ? "max-w-xl" : "mt-8 md:mt-16 lg:mt-[100px] max-w-lg lg:max-w-[560px]"}>
@@ -85,7 +80,7 @@ function HeroIntro({ compact }: { compact?: boolean }) {
               : "font-serif font-bold text-3xl sm:text-4xl md:text-[2.5rem] lg:text-[2.85rem] tracking-[0.05em] uppercase text-gold leading-[1.2] mb-3 md:mb-4"
           }
         >
-          Центр международной торговли стран БРИКС+
+          {dict.home.heroTitle}
         </h1>
         <p
           className={
@@ -94,11 +89,11 @@ function HeroIntro({ compact }: { compact?: boolean }) {
               : "text-cream/90 text-base md:text-lg font-normal leading-relaxed mb-5 md:mb-6 max-w-md"
           }
         >
-          Объединяем рынки, создаём возможности, строим будущее вместе
+          {dict.home.heroSubtitle}
         </p>
         <div className={compact ? "flex flex-col gap-3 sm:flex-row sm:flex-wrap" : "flex flex-wrap gap-3"}>
           <Button href="/o-kompanii" size="md" className={compact ? "w-full sm:w-auto" : undefined}>
-            О компании
+            {dict.home.aboutCompany}
           </Button>
           <Button
             href="/napravleniya"
@@ -106,7 +101,7 @@ function HeroIntro({ compact }: { compact?: boolean }) {
             size="md"
             className={compact ? "w-full sm:w-auto" : undefined}
           >
-            Наши направления
+            {dict.home.ourDirections}
           </Button>
         </div>
       </div>
@@ -125,7 +120,7 @@ function HeroIntro({ compact }: { compact?: boolean }) {
               className={
                 compact
                   ? "flex flex-col items-start"
-                  : "flex flex-col items-start md:items-center md:px-4 first:md:pl-0"
+                  : "flex flex-col items-start md:items-center md:px-4 first:md:ps-0"
               }
             >
               <div
@@ -208,6 +203,7 @@ function HeroMobile() {
 
 /** Desktop: sticky scroll-сцена */
 function HeroDesktop() {
+  const dict = useDictionary();
   const trackRef = useRef<HTMLDivElement>(null);
   const [progress, setProgress] = useState(0);
 
@@ -264,20 +260,20 @@ function HeroDesktop() {
           style={{ opacity: detailsOpacity }}
           aria-hidden={detailsOpacity < 0.05}
         >
-          <div className="absolute inset-y-0 right-0 w-[70%] lg:w-[66%]">
+          <div className="absolute inset-y-0 end-0 w-[70%] lg:w-[66%]">
             <Image
               src={heroBanner}
               alt="Феникс Трейдинг — международная логистика, КамАЗ и морские перевозки"
               fill
               priority
               sizes="70vw"
-              className="object-contain object-right object-center scale-105 origin-right"
+              className="object-contain object-end object-center scale-105 origin-bottom"
               placeholder="blur"
             />
           </div>
 
-          <div className="absolute inset-y-0 left-0 w-[55%] pointer-events-none overflow-hidden">
-            <div className="absolute left-[2%] top-1/2 w-[100%] max-w-[640px] -translate-y-1/2 opacity-[0.22]">
+          <div className="absolute inset-y-0 start-0 w-[55%] pointer-events-none overflow-hidden">
+            <div className="absolute start-[2%] top-1/2 w-[100%] max-w-[640px] -translate-y-1/2 opacity-[0.22]">
               <Image
                 src={worldMap}
                 alt=""
@@ -291,7 +287,7 @@ function HeroDesktop() {
           </div>
 
           <div
-            className="absolute inset-0 pointer-events-none"
+            className="absolute inset-0 pointer-events-none rtl:-scale-x-100"
             style={{
               background:
                 "linear-gradient(90deg, #06261b 0%, #06261b 30%, rgba(6,38,27,0.96) 40%, rgba(6,38,27,0.7) 52%, rgba(6,38,27,0.35) 62%, rgba(6,38,27,0.1) 72%, transparent 82%)",
@@ -338,10 +334,11 @@ function HeroDesktop() {
             <div className="relative min-h-[220px] md:min-h-[240px] max-w-md w-full">
               {benefits.map((benefit, index) => {
                 const opacity = benefitOpacity(progress, index);
+                const copy = dict.home.benefits[index];
                 return (
                   <div
-                    key={benefit.title}
-                    className="absolute left-0 top-0 w-full max-w-md rounded-xl border border-white/15 bg-white/10 px-5 py-5 md:px-6 md:py-6 shadow-[0_8px_32px_rgba(0,0,0,0.28)] backdrop-blur-md"
+                    key={copy?.title ?? index}
+                    className="absolute start-0 top-0 w-full max-w-md rounded-xl border border-white/15 bg-white/10 px-5 py-5 md:px-6 md:py-6 shadow-[0_8px_32px_rgba(0,0,0,0.28)] backdrop-blur-md"
                     style={{
                       opacity,
                       transform: `translateY(${(1 - opacity) * 20}px)`,
@@ -355,10 +352,10 @@ function HeroDesktop() {
                     </p>
                     <div className="text-gold mb-4">{benefit.icon}</div>
                     <h2 className="font-serif font-bold text-2xl sm:text-3xl md:text-4xl tracking-[0.08em] uppercase text-cream leading-tight mb-3">
-                      {benefit.title}
+                      {copy?.title ?? benefit.title}
                     </h2>
                     <p className="text-cream/85 text-base md:text-lg leading-relaxed max-w-sm">
-                      {benefit.description}
+                      {copy?.description ?? benefit.description}
                     </p>
                   </div>
                 );

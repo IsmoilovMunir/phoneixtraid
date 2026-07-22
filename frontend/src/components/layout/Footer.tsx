@@ -1,30 +1,32 @@
+"use client";
+
 import Link from "next/link";
-import { mainNav } from "@/data/navigation";
+import { getMainNav } from "@/data/navigation";
 import { siteConfig } from "@/lib/config";
+import { useDictionary } from "@/components/i18n/LocaleProvider";
 import { Container } from "./Container";
 import { NewsletterForm } from "../forms/NewsletterForm";
 import { Logo } from "../ui/Logo";
 
 export function Footer() {
+  const dict = useDictionary();
+  const mainNav = getMainNav(dict.nav);
+
   return (
     <footer className="bg-green-darker border-t border-gold/20">
       <Container className="py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1.2fr] gap-10">
-          {/* Company info */}
           <div>
             <Logo height={96} responsive={false} className="mb-4" />
             <p className="text-cream/70 text-sm leading-relaxed mb-4">
-              {siteConfig.description}
+              {dict.config.description}
             </p>
-            <p className="text-cream/50 text-xs">
-              {siteConfig.legalName}
-            </p>
+            <p className="text-cream/50 text-xs">{dict.config.legalName}</p>
           </div>
 
-          {/* Navigation */}
           <div>
             <h3 className="font-serif text-sm tracking-[0.2em] uppercase text-gold mb-4">
-              Навигация
+              {dict.footer.navigation}
             </h3>
             <ul className="space-y-2">
               {mainNav.map((item) => (
@@ -40,13 +42,12 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Contacts */}
           <div>
             <h3 className="font-serif text-sm tracking-[0.2em] uppercase text-gold mb-4">
-              Контакты
+              {dict.footer.contacts}
             </h3>
             <address className="not-italic space-y-2 text-sm text-cream/70">
-              <p>{siteConfig.address.full}</p>
+              <p>{dict.config.addressFull}</p>
               <p>
                 <a
                   href={`tel:${siteConfig.phoneHref}`}
@@ -63,17 +64,16 @@ export function Footer() {
                   {siteConfig.email}
                 </a>
               </p>
-              <p>{siteConfig.workingHours}</p>
+              <p>{dict.config.workingHours}</p>
             </address>
           </div>
 
-          {/* Newsletter */}
           <div>
             <h3 className="font-serif text-sm tracking-[0.2em] uppercase text-gold mb-4">
-              Подписка
+              {dict.footer.subscribe}
             </h3>
             <p className="text-sm text-cream/70 mb-4">
-              Получайте новости о поставках и специальных предложениях
+              {dict.footer.subscribeText}
             </p>
             <NewsletterForm />
           </div>
@@ -81,11 +81,10 @@ export function Footer() {
 
         <div className="mt-10 pt-6 border-t border-gold/10 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-cream/50">
           <p>
-            © {new Date().getFullYear()} {siteConfig.name}. Все права защищены.
+            © {new Date().getFullYear()} {dict.config.name}.{" "}
+            {dict.footer.copyrightSuffix}
           </p>
-          <p>
-            Центр международной торговли стран БРИКС+
-          </p>
+          <p>{dict.common.bricsCenter}</p>
         </div>
       </Container>
     </footer>

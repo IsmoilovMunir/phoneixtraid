@@ -2,6 +2,7 @@
 
 import Script from "next/script";
 import { useEffect, useState } from "react";
+import { useDictionary } from "@/components/i18n/LocaleProvider";
 import { analyticsConfig } from "@/lib/config";
 
 const CONSENT_KEY = "phoenix-cookie-consent";
@@ -73,7 +74,13 @@ export function Analytics() {
 }
 
 export function CookieConsent() {
+  const dict = useDictionary();
   const [visible, setVisible] = useState(false);
+  const cookieText = dict.cookie?.text || dict.common.cookieText;
+  const cookieAccept = dict.cookie?.accept || dict.common.cookieAccept;
+  const privacyLink = dict.cookie?.privacyLink || dict.common.privacy;
+  const linkIndex = cookieText.indexOf(privacyLink);
+  const hasInlineLink = linkIndex >= 0;
 
   useEffect(() => {
     if (localStorage.getItem(CONSENT_KEY) !== "accepted") {
@@ -94,18 +101,28 @@ export function CookieConsent() {
       <div className="mx-auto max-w-[1400px] rounded-lg border border-gold/30 bg-green-dark/95 backdrop-blur-sm p-4 md:p-6 shadow-2xl">
         <div className="flex flex-col md:flex-row md:items-center gap-4">
           <p className="flex-1 text-sm text-cream/80 leading-relaxed">
-            Мы используем файлы cookie и сервисы аналитики (Яндекс.Метрика, Google Analytics)
-            для улучшения работы сайта. Продолжая использование сайта, вы соглашаетесь с{" "}
-            <a href="/privacy" className="text-gold hover:underline">
-              политикой обработки данных
-            </a>{" "}
-            в соответствии с 152-ФЗ.
+            {hasInlineLink ? (
+              <>
+                {cookieText.slice(0, linkIndex)}
+                <a href="/privacy" className="text-gold hover:underline">
+                  {privacyLink}
+                </a>
+                {cookieText.slice(linkIndex + privacyLink.length)}
+              </>
+            ) : (
+              <>
+                {cookieText}{" "}
+                <a href="/privacy" className="text-gold hover:underline">
+                  {privacyLink}
+                </a>
+              </>
+            )}
           </p>
           <button
             onClick={accept}
             className="shrink-0 rounded-lg bg-gold px-6 py-2.5 text-sm font-semibold text-green-dark hover:bg-gold-light transition-colors"
           >
-            Принять
+            {cookieAccept}
           </button>
         </div>
       </div>
